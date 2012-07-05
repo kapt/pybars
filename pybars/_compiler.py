@@ -445,6 +445,7 @@ class Compiler:
         :param source: The template to compile - should be a unicode string.
         :return: A template ready to run.
         """
+        
         assert isinstance(source, unicode)
         tree = self._handlebars(source).apply('template')[0]
         # print source
@@ -465,6 +466,9 @@ class Compiler:
             block content for a single item).
         :return: None
         """
+        
+        _pybars_['helpers'][helper_name]= helper_callback
+        
         global_helpers[helper_name] = helper_callback
 
 #orig = Compiler._handlebars.rule_blockrule

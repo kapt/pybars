@@ -130,7 +130,7 @@ class strlist(list):
         elif type(thing) == str:
             # Ugh. Kill this in 3.
             self.append(unicode(thing))
-        else: 
+        else:
             # Recursively expand to a flat list; may deserve a C accelerator at
             # some point.
             for element in thing:
@@ -339,7 +339,7 @@ class CodeBuilder:
         return u", ".join(params) + ")"
 
     def find_lookup(self, path, path_type, call):
-        if path and path_type == "simple": # simple names can reference helpers.
+        if path and path_type == "simple":  # simple names can reference helpers.
             # TODO: compile this whole expression in the grammar; for now,
             # fugly but only a compile time overhead.
             # XXX: just rm.
@@ -366,7 +366,7 @@ class CodeBuilder:
             self._result.grow(
                 u"    elif value is None:\n"
                 u"        this = Scope(context, context)\n"
-                u"        value = helpers.get('helperMissing')(this, '%s', %s\n"
+                u"        value = helpers.get('blockHelperMissing')(this, '%s', context %s\n"
                     % (realname, call)
                 )
         self._result.grow(u"    if value is None: value = ''\n")
@@ -445,7 +445,7 @@ class Compiler:
         :param source: The template to compile - should be a unicode string.
         :return: A template ready to run.
         """
-        
+
         assert isinstance(source, unicode)
         tree = self._handlebars(source).apply('template')[0]
         # print source
@@ -466,13 +466,13 @@ class Compiler:
             block content for a single item).
         :return: None
         """
-        
-        _pybars_['helpers'][helper_name]= helper_callback
-        
+
+        _pybars_['helpers'][helper_name] = helper_callback
+
         global_helpers[helper_name] = helper_callback
 
-#orig = Compiler._handlebars.rule_blockrule
-#def thunk(*args, **kwargs):
+# orig = Compiler._handlebars.rule_blockrule
+# def thunk(*args, **kwargs):
 #    import pdb;pdb.set_trace()
 #    return orig(*args, **kwargs)
-#Compiler._handlebars.rule_blockrule = thunk
+# Compiler._handlebars.rule_blockrule = thunk

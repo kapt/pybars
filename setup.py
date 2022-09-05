@@ -16,17 +16,25 @@
 # GNU Lesser General Public License version 3 (see the file LICENSE).
   
 
+from os.path import abspath, dirname, join
 from distutils.core import setup
 import os.path
 
-description = file(
-        os.path.join(os.path.dirname(__file__), 'README'), 'rb').read()
+
+def read_relative_file(filename):
+    """
+    Returns contents of the given file, whose path is supposed relative
+    to this module.
+    """
+    with open(join(dirname(abspath(__file__)), filename)) as f:
+        return f.read()
+
 
 setup(name="pybars",
       version="0.0.1",
       description=\
               "handlebars.js templating for Python.",
-      long_description=description,
+      long_description=read_relative_file("README"),
       maintainer="Launchpad Developers",
       maintainer_email="launchpad-dev@lists.launchpad.net",
       url="https://launchpad.net/pybars",
